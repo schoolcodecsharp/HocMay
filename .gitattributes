@@ -1,0 +1,8 @@
+# Stable text bytes across Windows/Linux checkouts (including frozen config checksums).
+* text=auto eol=lf
+*.joblib binary
+*.png binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.docx binary
