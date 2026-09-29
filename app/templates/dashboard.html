@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Kết quả mô hình · California Housing Lab{% endblock %}
+{% block content %}
+<section class="page-heading field-grid compact">
+  <div><p class="dateline">Bằng chứng thực nghiệm</p><h1>Validation chọn mô hình. Test chỉ kết luận.</h1><p>Tất cả số liệu dưới đây được đọc từ artifact do <code>python -m src.train</code> sinh ra.</p></div>
+</section>
+
+{% if not metrics %}
+<section class="empty-state"><h2>Chưa có kết quả huấn luyện</h2><p>Chạy <code>python -m src.train</code> rồi tải lại trang.</p></section>
+{% else %}
+<section class="metric-section">
+  <div class="section-heading"><h2>Final test của pipeline được chọn</h2><p>{{ metadata.selected_model|replace('_', ' ') }} · đơn vị target 100.000 USD</p></div>
+  <dl class="metric-ledger">
+    <div><dt>MAE</dt><dd>{{ '%.4f'|format(metrics.test.selected_pipeline.mae) }}</dd><small>Sai số tuyệt đối trung bình</small></div>
+    <div><dt>RMSE</dt><dd>{{ '%.4f'|format(metrics.test.selected_pipeline.rmse) }}</dd><small>Nhạy hơn với lỗi lớn</small></div>
+    <div><dt>R²</dt><dd>{{ '%.4f'|format(metrics.test.selected_pipeline.r2) }}</dd><small>Tỷ lệ biến thiên được giải thích</small></div>
+  </dl>
+</section>
+
+<section class="content-section">
+  <div class="section-heading"><h2>Validation và final test</h2><p>Test không tham gia chọn learning rate, preprocessing hoặc model.</p></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th rowspan="2">Mô hình</th><th colspan="3">Validation</th><th colspan="3">Final test</th></tr><tr><th>MAE</th><th>RMSE</th><th>R²</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead>
+    <tbody>
+    {% for key, label in [('mean_baseline','Mean Baseline'), ('linear_regression','Linear Regression'), ('sgd_regressor','SGDRegressor')] %}
+      <tr><th>{{ label }}</th><td>{{ '%.4f'|format(metrics.validation[key].mae) }}</td><td>{{ '%.4f'|format(metrics.validation[key].rmse) }}</td><td>{{ '%.4f'|format(metrics.validation[key].r2) }}</td><td>{{ '%.4f'|format(metrics.test[key].mae) }}</td><td>{{ '%.4f'|format(metrics.test[key].rmse) }}</td><td>{{ '%.4f'|format(metrics.test[key].r2) }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+</section>
+
+<section class="figure-gallery">
+  <figure class="wide"><img src="/figures/model_comparison.png" alt="Ba biểu đồ cột so sánh MAE, RMSE và R² của ba mô hình trên test"><figcaption><strong>Hình 1.</strong> So sánh model trên final test sau khi quyết định đã đóng băng.</figcaption></figure>
+  <figure class="wide"><img src="/figures/sgd_learning_curves.png" alt="Đường training loss theo epoch cho bốn learning rate"><figcaption><strong>Hình 2.</strong> Loss thực tế của SGD; trục dọc dùng thang symlog để vẫn đọc được cấu hình bất ổn.</figcaption></figure>
+  <figure><img src="/figures/standardized_coefficients.png" alt="Biểu đồ hệ số chuẩn hóa của tám feature"><figcaption><strong>Hình 3.</strong> Coefficient mô tả mối liên hệ trong mô hình, không chứng minh nhân quả.</figcaption></figure>
+  <figure><img src="/figures/residual_vs_predicted.png" alt="Residual theo predicted value, làm nổi bật target gần mức cap"><figcaption><strong>Hình 4.</strong> Residual = y_true − y_pred; điểm target cap được đánh dấu riêng.</figcaption></figure>
+  <figure><img src="/figures/residual_distribution.png" alt="Histogram phân phối residual trên final test"><figcaption><strong>Hình 5.</strong> Phân phối residual của pipeline được chọn.</figcaption></figure>
+  <figure><img src="/figures/eda_target_geography.png" alt="Histogram target và biểu đồ vị trí địa lý California"><figcaption><strong>Hình 6.</strong> Target cap và cấu trúc địa lý là hai giới hạn quan trọng.</figcaption></figure>
+</section>
+
+<section class="content-section two-column findings">
+  <div><h2>Chất lượng dữ liệu</h2><p><strong>{{ quality.samples }}</strong> mẫu, <strong>{{ quality.features }}</strong> feature, <strong>{{ quality.duplicate_rows }}</strong> dòng trùng hoàn toàn và <strong>{{ quality.removed_rows }}</strong> dòng bị loại.</p></div>
+  <div><h2>Ảnh hưởng target cap</h2><p>Trong test có <strong>{{ residual.target_cap_test_samples }}</strong> điểm target ≥ 5,0. Residual trung bình của nhóm này là <strong>{{ '%.4f'|format(residual.mean_residual_at_cap) }}</strong>, cần đọc cùng giới hạn kiểm duyệt của target.</p></div>
+</section>
+{% endif %}
+{% endblock %}

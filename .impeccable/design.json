@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T08:30:00+07:00",
+  "title": "Design System: California Housing Lab",
+  "extensions": {
+    "colorMeta": {
+      "survey-ink": {"role": "primary", "displayName": "Survey Ink", "canonical": "#173f4a", "tonalRamp": ["#07171b", "#0f3038", "#173f4a", "#2b5c67", "#527d84", "#85a3a5", "#bfd0cf", "#edf4f2"]},
+      "signal-terracotta": {"role": "secondary", "displayName": "Signal Terracotta", "canonical": "#bb583b", "tonalRamp": ["#35140c", "#632718", "#8e3e29", "#bb583b", "#d87c62", "#e9a692", "#f4d2c6", "#fff1ec"]},
+      "field-paper": {"role": "neutral", "displayName": "Field Paper", "canonical": "#f4f0e7", "tonalRamp": ["#25231e", "#4e4a41", "#777166", "#a29a8d", "#c9c1b3", "#e1dace", "#f4f0e7", "#fffdf7"]}
+    },
+    "typographyMeta": {
+      "display": {"displayName": "Research Question", "purpose": "Hero and section questions."},
+      "body": {"displayName": "Working Text", "purpose": "Controls, explanations and model evidence."},
+      "label": {"displayName": "Survey Label", "purpose": "Datelines, field names and metric labels."}
+    },
+    "shadows": [{"name": "raised-sheet", "value": "0 14px 34px rgba(23, 39, 43, 0.12)", "purpose": "Prediction result and figure sheets only."}],
+    "motion": [{"name": "state-change", "value": "180ms ease-out", "purpose": "Hover, active and result-state feedback."}],
+    "breakpoints": [{"name": "compact", "value": "850px"}, {"name": "phone", "value": "560px"}]
+  },
+  "components": [
+    {"name": "Primary Button", "kind": "button", "refersTo": "button-primary", "description": "Main action for starting an estimate.", "html": "<button class=\"ds-btn-primary\">Chạy ước lượng</button>", "css": ".ds-btn-primary{min-height:48px;padding:.72rem 1.2rem;border:0;border-radius:10px;color:#fff;background:#bb583b;font:750 1rem 'Segoe UI',sans-serif;transition:background-color 180ms ease-out,transform 180ms ease-out}.ds-btn-primary:hover{background:#8e3e29;transform:translateY(-1px)}.ds-btn-primary:focus-visible{outline:3px solid #f0a33b;outline-offset:3px}"},
+    {"name": "Measured Input", "kind": "input", "refersTo": "input", "description": "Numeric field with explicit observed domain.", "html": "<label class=\"ds-field\"><strong>MedInc</strong><input value=\"3.54\"><small>Miền train: 0.4999 → 15</small></label>", "css": ".ds-field{display:grid;gap:8px;color:#17272b;font-family:'Segoe UI',sans-serif}.ds-field input{padding:.78rem .9rem;border:1px solid #a99e8d;border-radius:10px;background:#fffdf7;color:#17272b;font:inherit}.ds-field input:focus-visible{outline:3px solid #f0a33b;outline-offset:3px}.ds-field small{color:#53666a}"},
+    {"name": "Survey Navigation", "kind": "nav", "description": "Deep-ink navigation with a precise active signal.", "html": "<nav class=\"ds-nav\"><a class=\"active\">Phạm vi</a><a>Ước lượng</a><a>Kết quả</a></nav>", "css": ".ds-nav{display:flex;background:#0f3038;font-family:'Segoe UI',sans-serif}.ds-nav a{padding:16px;color:#dce5e3;text-decoration:none}.ds-nav a:hover{background:rgba(255,255,255,.06);color:white}.ds-nav .active{box-shadow:inset 0 -3px 0 #f0a33b;color:white}"}
+  ],
+  "narrative": {
+    "northStar": "The Geographic Survey Notebook",
+    "overview": "A contemporary field record for census geography: warm paper, precise survey ink, sparse coordinate lines and a single terracotta signal. Academic and operational rather than commercial.",
+    "keyCharacteristics": ["Warm paper with deep blue-green ink.", "Editorial serif questions with familiar sans controls.", "Coordinate grids only where measurement is meaningful.", "Terracotta marks actions, warnings and observed points."],
+    "rules": [
+      {"name": "The Signal Color Rule", "body": "Terracotta identifies primary action, warning or selected evidence; it is not general decoration.", "section": "colors"},
+      {"name": "The Evidence Label Rule", "body": "Uppercase tracked labels are reserved for datelines, metric names and short research metadata.", "section": "typography"},
+      {"name": "The Flat Evidence Rule", "body": "Tables, ledgers and warning bands use tonal contrast and rules; they do not float.", "section": "elevation"}
+    ],
+    "dos": ["Do keep dataset year and census block group scope close to predictions.", "Do use charts and generated artifacts as the strongest visual evidence.", "Do preserve keyboard focus, error, disabled, loading and empty states."],
+    "donts": ["Don't borrow real-estate marketplace photography, pricing badges or sales language.", "Don't use terracotta as background decoration unrelated to state or meaning.", "Don't put the coordinate grid behind ordinary long-form content.", "Don't turn every section into a rounded card."]
+  }
+}

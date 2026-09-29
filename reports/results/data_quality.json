@@ -1,0 +1,35 @@
+{
+  "samples": 20640,
+  "features": 8,
+  "columns": {
+    "MedInc": "float64",
+    "HouseAge": "float64",
+    "AveRooms": "float64",
+    "AveBedrms": "float64",
+    "Population": "float64",
+    "AveOccup": "float64",
+    "Latitude": "float64",
+    "Longitude": "float64",
+    "MedHouseVal": "float64"
+  },
+  "missing_values": {
+    "MedInc": 0,
+    "HouseAge": 0,
+    "AveRooms": 0,
+    "AveBedrms": 0,
+    "Population": 0,
+    "AveOccup": 0,
+    "Latitude": 0,
+    "Longitude": 0,
+    "MedHouseVal": 0
+  },
+  "duplicate_rows": 0,
+  "removed_rows": 0,
+  "removed_rows_reason": "Không loại dòng nào.",
+  "target_cap_count": 992,
+  "split": {
+    "train": 14448,
+    "validation": 3096,
+    "test": 3096
+  }
+}

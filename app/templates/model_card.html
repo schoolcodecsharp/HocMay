@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Model Card · California Housing Lab{% endblock %}
+{% block content %}
+<section class="page-heading field-grid compact"><div><p class="dateline">Model Card</p><h1>Phạm vi, bằng chứng và giới hạn sử dụng</h1><p>Tài liệu ngắn giúp người dùng hiểu model trước khi diễn giải prediction.</p></div></section>
+<section class="model-card-layout">
+  <article>
+    <h2>Thông tin mô hình</h2>
+    <dl class="definition-list">
+      <div><dt>Tên</dt><dd>{{ metadata.model_name if metadata else 'Chưa train' }}</dd></div>
+      <div><dt>Loại được chọn</dt><dd>{{ metadata.selected_model|replace('_',' ') if metadata else 'Chưa có' }}</dd></div>
+      <div><dt>Mục đích</dt><dd>Minh họa hồi quy tuyến tính và Gradient Descent trên dữ liệu lịch sử.</dd></div>
+      <div><dt>Dataset</dt><dd>California Housing, điều tra khoảng năm 1990.</dd></div>
+      <div><dt>Mẫu</dt><dd>{{ quality.samples if quality else 20640 }} census block group.</dd></div>
+      <div><dt>Target</dt><dd>MedHouseVal, đơn vị 100.000 USD.</dd></div>
+      <div><dt>Preprocessing</dt><dd>StandardScaler nằm trong Pipeline và được fit đúng trên dữ liệu huấn luyện.</dd></div>
+    </dl>
+  </article>
+  <article>
+    <h2>Sử dụng phù hợp</h2>
+    <p>Phục vụ học tập, minh họa mối liên hệ tuyến tính, so sánh baseline và phân tích residual.</p>
+    <h2>Không sử dụng cho</h2>
+    <ul class="prohibited-list"><li>Cho vay hoặc quyết định tín dụng</li><li>Thuế và định giá tài sản thật</li><li>Mua bán hoặc giao dịch bất động sản</li><li>Quyết định ảnh hưởng trực tiếp tới con người</li></ul>
+  </article>
+  <article class="full-width">
+    <h2>Giới hạn đã biết</h2>
+    <div class="limitations"><p><strong>Thời gian:</strong> dữ liệu khoảng năm 1990, không phản ánh thị trường hiện tại.</p><p><strong>Target cap:</strong> mức trần gần 5,0 làm biến dạng phân phối và residual ở nhóm giá cao.</p><p><strong>Địa lý:</strong> chỉ mô tả California; không suy rộng sang khu vực khác.</p><p><strong>Đạo đức:</strong> đặc trưng địa lý có thể phản ánh bất bình đẳng lịch sử trong dữ liệu.</p><p><strong>Diễn giải:</strong> coefficient và correlation không chứng minh quan hệ nhân quả.</p></div>
+  </article>
+</section>
+{% endblock %}

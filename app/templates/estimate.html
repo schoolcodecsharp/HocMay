@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Ước lượng khu vực · California Housing Lab{% endblock %}
+{% block content %}
+<section class="page-heading field-grid compact">
+  <div><p class="dateline">Công cụ nghiên cứu</p><h1>Ước lượng MedHouseVal cho một khu vực</h1><p>Nhập tám đặc trưng đúng đơn vị. Hệ thống sẽ từ chối dữ liệu thiếu, NaN, vô hạn hoặc nằm ngoài miền train.</p></div>
+</section>
+
+<section class="estimation-layout">
+  <form id="estimate-form" class="estimate-form" novalidate>
+    <div class="form-section-heading"><h2>Đặc trưng kinh tế và nhà ở</h2><p>Các khoảng dưới đây lấy từ train + validation sau khi model đã được chọn.</p></div>
+    <div class="form-grid">
+      {% set descriptions = {
+        'MedInc': 'Thu nhập trung vị, đơn vị chục nghìn USD',
+        'HouseAge': 'Tuổi nhà trung vị, năm',
+        'AveRooms': 'Số phòng trung bình mỗi hộ',
+        'AveBedrms': 'Số phòng ngủ trung bình mỗi hộ',
+        'Population': 'Dân số của block group, người',
+        'AveOccup': 'Số người cư trú trung bình mỗi hộ',
+        'Latitude': 'Vĩ độ địa lý, độ',
+        'Longitude': 'Kinh độ địa lý, độ'
+      } %}
+      {% for name, bounds in schema.items() %}
+      <label class="field">
+        <span>{{ name }}</span>
+        <small>{{ descriptions[name] }}</small>
+        <input name="{{ name }}" type="number" step="any" min="{{ bounds.min }}" max="{{ bounds.max }}" value="{{ '%.4g'|format(bounds.median) }}" required aria-describedby="{{ name }}-hint {{ name }}-error">
+        <span id="{{ name }}-hint" class="range">Miền train: {{ '%.4g'|format(bounds.min) }} → {{ '%.4g'|format(bounds.max) }}</span>
+        <span id="{{ name }}-error" class="field-error" aria-live="polite"></span>
+      </label>
+      {% endfor %}
+    </div>
+    <div id="form-error" class="form-error" role="alert" hidden></div>
+    <button id="submit-button" class="button primary submit-button" type="submit"><span>Chạy ước lượng</span></button>
+  </form>
+
+  <aside class="result-panel" aria-live="polite">
+    <div id="result-empty" class="result-empty">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><path d="M18 94 49 24l18 33 12-17 23 54H18Z"/><path d="M28 80h63M39 60h39"/></svg>
+      <h2>Kết quả sẽ xuất hiện tại đây</h2>
+      <p>Prediction giữ nguyên đơn vị dataset và có thêm phép quy đổi USD để dễ đọc.</p>
+    </div>
+    <div id="result-content" hidden>
+      <p class="result-label">Predicted median value</p>
+      <p class="result-number"><strong id="prediction-value">—</strong><span>× 100.000 USD</span></p>
+      <p id="usd-value" class="usd-value">—</p>
+      <dl class="result-meta"><div><dt>Mô hình</dt><dd id="model-name">—</dd></div><div><dt>Đơn vị quan sát</dt><dd>Census block group</dd></div></dl>
+      <p id="result-warning" class="result-warning"></p>
+    </div>
+  </aside>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='/js/estimate.js') }}" defer></script>{% endblock %}

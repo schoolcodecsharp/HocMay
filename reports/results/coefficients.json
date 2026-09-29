@@ -1,0 +1,34 @@
+[
+  {
+    "feature": "MedInc",
+    "standardized_coefficient": 0.8492217601003738
+  },
+  {
+    "feature": "HouseAge",
+    "standardized_coefficient": 0.1221193090646254
+  },
+  {
+    "feature": "AveRooms",
+    "standardized_coefficient": -0.2995584494086885
+  },
+  {
+    "feature": "AveBedrms",
+    "standardized_coefficient": 0.3484096731563675
+  },
+  {
+    "feature": "Population",
+    "standardized_coefficient": -0.0008844881340279308
+  },
+  {
+    "feature": "AveOccup",
+    "standardized_coefficient": -0.04169803877849164
+  },
+  {
+    "feature": "Latitude",
+    "standardized_coefficient": -0.8938556494746293
+  },
+  {
+    "feature": "Longitude",
+    "standardized_coefficient": -0.8686166880612519
+  }
+]

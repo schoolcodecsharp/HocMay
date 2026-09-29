@@ -1,0 +1,12 @@
+# Môi trường Python
+.venv/
+__pycache__/
+*.py[cod]
+~$*.docx
+
+# Dữ liệu được tải/tái tạo bằng python -m src.data
+data/raw/*
+!data/raw/.gitkeep
+
+# Cache của scikit-learn nếu đặt trong project
+.cache/

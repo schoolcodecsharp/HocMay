@@ -1,0 +1,11 @@
+pandas
+scikit-learn
+numpy
+matplotlib
+joblib
+fastapi
+uvicorn
+jinja2
+python-multipart
+pytest
+httpx

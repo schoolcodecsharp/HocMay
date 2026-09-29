@@ -1,0 +1,21 @@
+{
+  "model_name": "California Housing Linear Study",
+  "selected_model": "linear_regression",
+  "features": [
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude"
+  ],
+  "target": "MedHouseVal",
+  "target_unit": "100,000 USD",
+  "random_state": 42,
+  "python_version": "3.14.7",
+  "scikit_learn_version": "1.9.1",
+  "pandas_version": "3.0.6",
+  "numpy_version": "2.5.3"
+}

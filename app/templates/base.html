@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="California Housing Lab — project Học máy cơ bản về Linear Regression và Gradient Descent.">
+  <title>{% block title %}California Housing Lab{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="California Housing Lab — trang chủ">
+      <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M6 33 18 8l6 12 5-7 7 20H6Z"/><path d="M10 28h22M14 20h14"/></svg>
+      <span><strong>California Housing</strong><small>Research lab · dữ liệu 1990</small></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Điều hướng chính">
+      <a href="/" {% if active == 'intro' %}aria-current="page"{% endif %}>Phạm vi</a>
+      <a href="/estimate" {% if active == 'estimate' %}aria-current="page"{% endif %}>Ước lượng</a>
+      <a href="/dashboard" {% if active == 'dashboard' %}aria-current="page"{% endif %}>Kết quả</a>
+      <a href="/model-card" {% if active == 'model-card' %}aria-current="page"{% endif %}>Model Card</a>
+    </nav>
+  </header>
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <p>Project 10 · Học máy cơ bản</p>
+    <p>Dữ liệu lịch sử California Housing · Không dùng để định giá tài sản thực.</p>
+  </footer>
+  <script src="{{ url_for('static', path='/js/site.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

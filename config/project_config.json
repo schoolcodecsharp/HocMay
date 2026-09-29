@@ -1,0 +1,8 @@
+{
+  "random_state": 42,
+  "train_size": 0.70,
+  "validation_size": 0.15,
+  "test_size": 0.15,
+  "sgd_learning_rates": [0.0001, 0.001, 0.01, 0.1],
+  "sgd_epochs": 80
+}
