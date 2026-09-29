@@ -17,6 +17,9 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
+.data-actions { display:flex; gap:1rem; align-items:center; margin-block:1.5rem; flex-wrap:wrap; }
+.audit-note { padding:1.2rem; background:var(--paper-deep); border-radius:10px; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;

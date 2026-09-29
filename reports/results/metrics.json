@@ -33,15 +33,18 @@
       "r2": 0.6081391076209188
     },
     "selected_pipeline": {
-      "mae": 0.5216883918038634,
-      "rmse": 0.7217682498014544,
-      "r2": 0.606030930361616
+      "mae": 0.521043010188229,
+      "rmse": 0.7212908538474728,
+      "r2": 0.6065519204153753
     }
   },
   "selection": {
     "selection_metric": "validation RMSE",
     "selected_model": "linear_regression",
     "selected_sgd_learning_rate": 0.0001,
-    "test_was_not_used_for_selection": true
+    "test_was_not_used_for_selection": true,
+    "candidate_fit_scope": "train only",
+    "serving_fit_scope": "train only",
+    "refit_policy": "Publish the already selected train-only candidate; never refit on validation/test."
   }
 }

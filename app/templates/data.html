@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Cơ sở dữ liệu · California Housing Lab{% endblock %}
+{% block content %}
+<section class="page-heading compact"><h1>Dữ liệu gốc, phép chuyển đổi rõ ràng</h1><p>SQLite lưu 20.640 census block group từ <code>cadata.txt</code>. Bảng xem dưới đây chỉ hiển thị train để hỗ trợ khám phá dữ liệu.</p></section>
+<section class="content-section">
+{% if database %}<p>Đã đối chiếu {{ database.rows }} dòng với scikit-learn. Sai lệch lớn nhất: <strong>{{ database.max_absolute_difference }}</strong>. Không loại dòng nào.</p>{% endif %}
+<p><code>block_groups</code> giữ các số tổng. View <code>housing_features</code> chia số phòng, phòng ngủ và dân số cho số hộ; target chia cho 100.000.</p>
+<div class="data-actions"><button class="button primary" id="previous" disabled>Trang trước</button><span id="page-status" role="status">Đang đọc CSDL…</span><button class="button primary" id="next" disabled>Trang sau</button></div>
+<p id="data-error" role="alert" hidden></p>
+<div class="table-wrap"><table id="data-table"><thead><tr>{% for n in ['row_id','MedInc','HouseAge','AveRooms','AveBedrms','Population','AveOccup','Latitude','Longitude','MedHouseVal'] %}<th scope="col">{{ n }}</th>{% endfor %}</tr></thead><tbody></tbody></table></div>
+<p>row_id là chỉ số dòng để truy nguyên, không dùng làm feature. MedHouseVal có đơn vị 100.000 USD lịch sử. Dữ liệu mô tả khu vực năm 1990, không phải giá của một căn nhà hiện tại.</p>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static',path='/js/data.js') }}" defer></script>{% endblock %}

@@ -1,0 +1,12 @@
+{
+  "reason": "Correct serving fit scope to the train-only candidate selected by validation.",
+  "model_selection_unchanged": true,
+  "new_fit_on_validation_or_test": false,
+  "test_metrics_source": "reports/archive/initial/metrics.json -> test.linear_regression",
+  "legacy_artifact": "reports/archive/initial/final_pipeline.joblib",
+  "legacy_fit_scope": "train + validation (including scaler)",
+  "current_fit_scope": "train only",
+  "train_samples": 14448,
+  "test_already_observed": true,
+  "note": "A compliance correction, not a new independently evaluated experiment."
+}

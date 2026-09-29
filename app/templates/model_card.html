@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Model Card · California Housing Lab{% endblock %}
 {% block content %}
-<section class="page-heading field-grid compact"><div><p class="dateline">Model Card</p><h1>Phạm vi, bằng chứng và giới hạn sử dụng</h1><p>Tài liệu ngắn giúp người dùng hiểu model trước khi diễn giải prediction.</p></div></section>
+<section class="page-heading field-grid compact"><div><h1>Phạm vi, bằng chứng và giới hạn sử dụng</h1><p>Tài liệu ngắn giúp người dùng hiểu model trước khi diễn giải prediction.</p></div></section>
 <section class="model-card-layout">
   <article>
     <h2>Thông tin mô hình</h2>
@@ -22,6 +22,10 @@
     <ul class="prohibited-list"><li>Cho vay hoặc quyết định tín dụng</li><li>Thuế và định giá tài sản thật</li><li>Mua bán hoặc giao dịch bất động sản</li><li>Quyết định ảnh hưởng trực tiếp tới con người</li></ul>
   </article>
   <article class="full-width">
+    <h2>Huấn luyện và đánh giá</h2>
+    <p>Split 70/15/15 với seed 42. StandardScaler và model chỉ fit trên train; validation RMSE chọn Linear Regression. SGD thử 0,0001; 0,001; 0,01; 0,1 trong 80 epoch. Web sử dụng đúng candidate train-only được chọn, không refit trên validation/test. Artifact refit train + validation cũ được giữ riêng trong archive, không còn dùng serving.</p>
+    {% if metrics %}<p>Final test của artifact: MAE {{ '%.4f'|format(metrics.test.selected_pipeline.mae) }}, RMSE {{ '%.4f'|format(metrics.test.selected_pipeline.rmse) }}, R² {{ '%.4f'|format(metrics.test.selected_pipeline.r2) }}. MAE và RMSE theo đơn vị 100.000 USD. Đây là kết quả cũ được bảo toàn, không phải test độc lập mới.</p>{% endif %}
+    <p>Features: MedInc, HouseAge, AveRooms, AveBedrms, Population, AveOccup, Latitude, Longitude. Nguồn: <a href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset">scikit-learn / StatLib</a>. Thời điểm dự đoán giả định đã có tám thống kê khu vực từ điều tra lịch sử.</p>
     <h2>Giới hạn đã biết</h2>
     <div class="limitations"><p><strong>Thời gian:</strong> dữ liệu khoảng năm 1990, không phản ánh thị trường hiện tại.</p><p><strong>Target cap:</strong> mức trần gần 5,0 làm biến dạng phân phối và residual ở nhóm giá cao.</p><p><strong>Địa lý:</strong> chỉ mô tả California; không suy rộng sang khu vực khác.</p><p><strong>Đạo đức:</strong> đặc trưng địa lý có thể phản ánh bất bình đẳng lịch sử trong dữ liệu.</p><p><strong>Diễn giải:</strong> coefficient và correlation không chứng minh quan hệ nhân quả.</p></div>
   </article>

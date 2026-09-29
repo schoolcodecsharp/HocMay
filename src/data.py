@@ -13,7 +13,6 @@ import pandas as pd
 import sklearn
 from sklearn.datasets import fetch_california_housing
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "raw" / "california_housing.csv"
 DEFAULT_METADATA = PROJECT_ROOT / "data" / "raw" / "california_housing_metadata.json"

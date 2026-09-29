@@ -3,6 +3,15 @@
 __pycache__/
 *.py[cod]
 ~$*.docx
+.pytest_cache/
+houses/*.txt
+data/*.sqlite*
+data/splits.json
+models/candidates.joblib
+.build/
+.chart-data-*/
+reports/qa/
+reports/results/residual_rows.csv
 
 # Dữ liệu được tải/tái tạo bằng python -m src.data
 data/raw/*

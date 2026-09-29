@@ -17,5 +17,7 @@
   "python_version": "3.14.7",
   "scikit_learn_version": "1.9.1",
   "pandas_version": "3.0.6",
-  "numpy_version": "2.5.3"
+  "numpy_version": "2.5.3",
+  "fit_scope": "train only",
+  "model_sha256": "cf8f035aa07d3f32b7813b617ac8531f20b4c5b4870546cc01a3b0ea73eee8d6"
 }

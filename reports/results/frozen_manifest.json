@@ -1,0 +1,10 @@
+{
+  "created_at_utc": "2026-09-29T14:22:20.428780+00:00",
+  "config_sha256": "c3c9330a022b4e4be730676141cae46351ef57638f08a7b71e90b54ae792a9f8",
+  "split_sha256": "daf9649cb4cee123ccdf20ebcedf83991c28e5a842251432287ac3ef13104c5d",
+  "candidate_sha256": "9230d1dbb5269ef9c65cd212c5af4692344aaa029ffa1b0637f9ec3d8458a4e0",
+  "selected_model": "linear_regression",
+  "serving_model_sha256": "cf8f035aa07d3f32b7813b617ac8531f20b4c5b4870546cc01a3b0ea73eee8d6",
+  "test_already_observed": true,
+  "evaluation_policy": "Reuse initial final-test metrics; additional residuals are a post-hoc audit, not an independent test."
+}

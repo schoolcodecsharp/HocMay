@@ -1,6 +1,8 @@
 {
   "definition": "residual = y_true - y_pred",
-  "mean_residual": -0.01747652368349092,
+  "mean_residual": -0.015177073316907205,
   "target_cap_test_samples": 141,
-  "mean_residual_at_cap": 1.0738239443890414
+  "mean_residual_at_cap": 1.0703423500941869,
+  "fit_scope": "train only",
+  "analysis_kind": "post-hoc verification, no tuning"
 }

@@ -2,13 +2,14 @@
 {% block title %}Kết quả mô hình · California Housing Lab{% endblock %}
 {% block content %}
 <section class="page-heading field-grid compact">
-  <div><p class="dateline">Bằng chứng thực nghiệm</p><h1>Validation chọn mô hình. Test chỉ kết luận.</h1><p>Tất cả số liệu dưới đây được đọc từ artifact do <code>python -m src.train</code> sinh ra.</p></div>
+  <div><h1>Validation chọn mô hình. Test chỉ kết luận.</h1><p>Số liệu đọc từ kết quả đã lưu của quá trình train, evaluate và phân tích thí nghiệm.</p></div>
 </section>
 
 {% if not metrics %}
 <section class="empty-state"><h2>Chưa có kết quả huấn luyện</h2><p>Chạy <code>python -m src.train</code> rồi tải lại trang.</p></section>
 {% else %}
 <section class="metric-section">
+  <p class="audit-note">Pipeline phục vụ là Linear Regression fit trên train, được chọn bằng validation. Metric test của candidate đã công bố từ lần chạy đầu được giữ nguyên; phân tích bổ sung là hậu kiểm, không phải test độc lập mới. Artifact refit train + validation cũ đã lưu riêng để truy vết, không còn dùng serving.</p>
   <div class="section-heading"><h2>Final test của pipeline được chọn</h2><p>{{ metadata.selected_model|replace('_', ' ') }} · đơn vị target 100.000 USD</p></div>
   <dl class="metric-ledger">
     <div><dt>MAE</dt><dd>{{ '%.4f'|format(metrics.test.selected_pipeline.mae) }}</dd><small>Sai số tuyệt đối trung bình</small></div>
@@ -30,6 +31,7 @@
 </section>
 
 <section class="figure-gallery">
+  <figure class="wide"><img src="/figures/validation_comparison.png" alt="So sánh MAE RMSE R2 trên validation"><figcaption>So sánh validation dùng để chọn mô hình, cùng split và đơn vị.</figcaption></figure>
   <figure class="wide"><img src="/figures/model_comparison.png" alt="Ba biểu đồ cột so sánh MAE, RMSE và R² của ba mô hình trên test"><figcaption><strong>Hình 1.</strong> So sánh model trên final test sau khi quyết định đã đóng băng.</figcaption></figure>
   <figure class="wide"><img src="/figures/sgd_learning_curves.png" alt="Đường training loss theo epoch cho bốn learning rate"><figcaption><strong>Hình 2.</strong> Loss thực tế của SGD; trục dọc dùng thang symlog để vẫn đọc được cấu hình bất ổn.</figcaption></figure>
   <figure><img src="/figures/standardized_coefficients.png" alt="Biểu đồ hệ số chuẩn hóa của tám feature"><figcaption><strong>Hình 3.</strong> Coefficient mô tả mối liên hệ trong mô hình, không chứng minh nhân quả.</figcaption></figure>
@@ -38,8 +40,25 @@
   <figure><img src="/figures/eda_target_geography.png" alt="Histogram target và biểu đồ vị trí địa lý California"><figcaption><strong>Hình 6.</strong> Target cap và cấu trúc địa lý là hai giới hạn quan trọng.</figcaption></figure>
 </section>
 
+<section class="content-section">
+  <h2>Learning rate và residual theo mức giá</h2>
+  <div class="table-wrap"><table><thead><tr><th>Learning rate</th><th>Validation MAE</th><th>Validation RMSE</th><th>Validation R²</th></tr></thead><tbody>{% for rate, score in trials.items() %}<tr><th>{{ rate }}</th><td>{{ '%.5g'|format(score.mae) }}</td><td>{{ '%.5g'|format(score.rmse) }}</td><td>{{ '%.5g'|format(score.r2) }}</td></tr>{% endfor %}</tbody></table></div>
+  <p>Rate quá nhỏ có thể hội tụ chậm; rate quá lớn có thể dao động hoặc bùng nổ loss. Trong bốn mức đã thử, 0,0001 ổn định nhất và có validation RMSE thấp nhất. Không suy rằng mức nhỏ hơn chưa thử sẽ tốt hoặc xấu hơn. Bảng giữ cả các cấu hình kém, không chọn bằng test.</p>
+  <div class="table-wrap"><table><thead><tr><th>Mức target thực</th><th>Số mẫu</th><th>Residual TB</th><th>MAE</th></tr></thead><tbody>{% for band, row in groups.get('by_actual_price',{}).items() %}<tr><th>{{ band }}</th><td>{{ row.count }}</td><td>{{ '%.4f'|format(row.mean_residual) }}</td><td>{{ '%.4f'|format(row.mae) }}</td></tr>{% endfor %}</tbody></table></div>
+  <p>Target trần thực tế gần 5,00001: các điểm bị cap nằm gần đường residual = 5,00001 − predicted. Giá trị tiềm ẩn trên trần không quan sát được, nên residual không phản ánh đầy đủ sai số của nhóm này.</p>
+  <figure><img src="/figures/residual_price_geography.png" alt="Residual theo target thực và tọa độ"><figcaption>Phân tích mô tả sau đánh giá, không dùng để tuning.</figcaption></figure>
+  <h2>EDA chỉ trên train</h2>
+  <p>{{ quality.split.train }} mẫu train. Histogram cho thấy đuôi dài ở biến số phòng và cư trú; giữ nguyên các dòng và chuẩn hóa trong Pipeline. Correlation giúp nhận diện đồng biến và đa cộng tuyến, không chứng minh nhân quả.</p>
+  {% for figure in ['eda_distributions.png','eda_correlations.png','eda_relationships.png'] %}<figure><img src="/figures/{{ figure }}" alt="Phân tích dữ liệu train {{ figure }}"><figcaption>Nguồn: California Housing, tính từ train với seed 42.</figcaption></figure>{% endfor %}
+</section>
+
+<section class="content-section">
+  <h2>Hệ số sau chuẩn hóa</h2>
+  <div class="table-wrap"><table><thead><tr><th>Feature</th><th>Coefficient chuẩn hóa</th></tr></thead><tbody>{% for row in coefficients %}<tr><th>{{ row.feature }}</th><td>{{ '%.6f'|format(row.standardized_coefficient) }}</td></tr>{% endfor %}</tbody></table></div>
+  <p>MedInc có hệ số dương lớn; Latitude và Longitude có hệ số âm lớn về trị tuyệt đối. Population gần 0 trong mô hình này. Dấu của AveRooms cần đọc cùng AveBedrms và các biến liên quan; đây là quan hệ có điều kiện trong mô hình, không phải tác động nhân quả.</p>
+</section>
 <section class="content-section two-column findings">
-  <div><h2>Chất lượng dữ liệu</h2><p><strong>{{ quality.samples }}</strong> mẫu, <strong>{{ quality.features }}</strong> feature, <strong>{{ quality.duplicate_rows }}</strong> dòng trùng hoàn toàn và <strong>{{ quality.removed_rows }}</strong> dòng bị loại.</p></div>
+  <div><h2>Chất lượng dữ liệu</h2><p>Toàn bộ nguồn có <strong>{{ quality.samples }}</strong> mẫu, <strong>{{ quality.features }}</strong> feature. Trên train có <strong>{{ quality.duplicate_rows }}</strong> dòng trùng hoàn toàn. Pipeline loại <strong>{{ quality.removed_rows }}</strong> dòng.</p></div>
   <div><h2>Ảnh hưởng target cap</h2><p>Trong test có <strong>{{ residual.target_cap_test_samples }}</strong> điểm target ≥ 5,0. Residual trung bình của nhóm này là <strong>{{ '%.4f'|format(residual.mean_residual_at_cap) }}</strong>, cần đọc cùng giới hạn kiểm duyệt của target.</p></div>
 </section>
 {% endif %}

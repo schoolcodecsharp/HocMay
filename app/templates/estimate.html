@@ -2,12 +2,12 @@
 {% block title %}Ước lượng khu vực · California Housing Lab{% endblock %}
 {% block content %}
 <section class="page-heading field-grid compact">
-  <div><p class="dateline">Công cụ nghiên cứu</p><h1>Ước lượng MedHouseVal cho một khu vực</h1><p>Nhập tám đặc trưng đúng đơn vị. Hệ thống sẽ từ chối dữ liệu thiếu, NaN, vô hạn hoặc nằm ngoài miền train.</p></div>
+  <div><h1>Ước lượng MedHouseVal cho một khu vực</h1><p>Nhập tám đặc trưng đúng đơn vị. Hệ thống sẽ từ chối dữ liệu thiếu, NaN, vô hạn hoặc nằm ngoài miền train.</p></div>
 </section>
 
 <section class="estimation-layout">
   <form id="estimate-form" class="estimate-form" novalidate>
-    <div class="form-section-heading"><h2>Đặc trưng kinh tế và nhà ở</h2><p>Các khoảng dưới đây lấy từ train + validation sau khi model đã được chọn.</p></div>
+    <div class="form-section-heading"><h2>Đặc trưng khu vực</h2><p>Các khoảng lấy riêng từ train; không bảo đảm mọi tổ hợp đều hợp lý hoặc nằm trong ranh giới California.</p></div>
     <div class="form-grid">
       {% set descriptions = {
         'MedInc': 'Thu nhập trung vị, đơn vị chục nghìn USD',

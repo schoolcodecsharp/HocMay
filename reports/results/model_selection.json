@@ -2,5 +2,8 @@
   "selection_metric": "validation RMSE",
   "selected_model": "linear_regression",
   "selected_sgd_learning_rate": 0.0001,
-  "test_was_not_used_for_selection": true
+  "test_was_not_used_for_selection": true,
+  "candidate_fit_scope": "train only",
+  "serving_fit_scope": "train only",
+  "refit_policy": "Publish the already selected train-only candidate; never refit on validation/test."
 }
