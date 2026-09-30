@@ -71,9 +71,15 @@ def to_features(raw):
 def build_database(source=ROOT / "houses/cadata.txt", destination=DB_PATH):
     source, destination = Path(source), Path(destination)
     if destination.exists():
-        with sqlite3.connect(destination) as conn:
+        with sqlite3.connect(
+            f"{destination.resolve().as_uri()}?mode=ro", uri=True
+        ) as conn:
             previous = dict(conn.execute("SELECT key,value FROM source_metadata"))
             count = conn.execute("SELECT count(*) FROM block_groups").fetchone()[0]
+            if previous.get("source_sha256") != checksum(source) or count != 20640:
+                raise FileExistsError(
+                    "CSDL đã tồn tại với nguồn khác; chọn --output khác để bảo toàn dữ liệu."
+                )
             if (
                 conn.execute("PRAGMA integrity_check").fetchone()[0] != "ok"
                 or conn.execute("PRAGMA foreign_key_check").fetchall()
@@ -89,12 +95,43 @@ def build_database(source=ROOT / "houses/cadata.txt", destination=DB_PATH):
                 raise ValueError(
                     "Split trong CSDL khác config; không ghi đè dữ liệu cũ."
                 )
-        if previous.get("source_sha256") == checksum(source) and count == 20640:
-            print("Database already imported; original rows preserved.")
-            return previous
-        raise FileExistsError(
-            "CSDL đã tồn tại với nguồn khác; chọn --output khác để bảo toàn dữ liệu."
-        )
+            # Checksum nguồn không phát hiện được sửa dữ liệu/công thức trong SQLite.
+            # Đối chiếu cả số gốc lẫn view, không chỉ số dòng và tính toàn vẹn file.
+            raw = read_cadata(source)
+            stored_raw = pd.read_sql_query(
+                "SELECT * FROM block_groups ORDER BY row_id", conn
+            )
+            stored_features = pd.read_sql_query(
+                "SELECT * FROM housing_features ORDER BY row_id", conn
+            )
+            try:
+                np.testing.assert_array_equal(stored_raw.row_id, np.arange(20640))
+                np.testing.assert_array_equal(stored_raw[RAW_COLUMNS], raw)
+                np.testing.assert_array_equal(stored_features.row_id, np.arange(20640))
+                np.testing.assert_allclose(
+                    stored_features[EXPECTED_FEATURES + [TARGET]],
+                    to_features(raw),
+                    rtol=0,
+                    atol=1e-12,
+                )
+                np.testing.assert_array_equal(
+                    stored_features["split"],
+                    [expected_splits[i] for i in range(20640)],
+                )
+            except (AssertionError, KeyError) as error:
+                raise ValueError(
+                    "CSDL khác dữ liệu gốc hoặc công thức chuyển đổi; không ghi đè."
+                ) from error
+        for key in (
+            "rows",
+            "raw_columns",
+            "max_absolute_difference",
+            "removed_rows",
+            "schema_version",
+        ):
+            previous[key] = json.loads(previous[key])
+        print("Database verified; original rows and feature formulas preserved.")
+        return previous
     raw = read_cadata(source)
     reference = load_california_housing()
     derived = to_features(raw)

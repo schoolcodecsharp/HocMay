@@ -107,6 +107,14 @@ API chỉ nhận số hữu hạn, đủ tám trường, không trường thừa
 
 Test bao phủ request hợp lệ, thiếu field, sai type, NaN, ngoài domain, thiếu model artifact, prediction và các trang web.
 
+Kiểm thử bổ sung logic phân trang (Node.js 18+; chỉ cần khi chạy test JavaScript, không cần để chạy ứng dụng):
+
+```powershell
+node --test tests/test_data_ui.cjs
+```
+
+Kiểm tra bao gồm số JSON quá lớn, offset vượt giới hạn, SQLite bị sửa giá trị/công thức, lỗi mạng, timeout và nút thử lại. Import lại CSDL đối chiếu từng dòng gốc và toàn bộ view với `cadata.txt`, không ghi đè CSDL khác nguồn hoặc đã sai lệch. Giao diện dùng Be Vietnam Pro lưu cục bộ, có giấy phép trong `app/static/fonts/OFL.txt`, không cần kết nối dịch vụ font ngoài.
+
 ## Kết quả và tái lập
 
 - Config: `config/project_config.json`.

@@ -1,0 +1,49 @@
+{
+  "verified_on": "2026-09-30",
+  "scope": "Vietnamese typography and data logic fixes; no authentication requested",
+  "python_tests": {"passed": 48, "failed": 0, "skipped": 0},
+  "javascript_tests": {"passed": 5, "failed": 0},
+  "environments": ["Project .venv", "Previously created clean dependency venv"],
+  "pip_check": "No broken requirements found",
+  "warning": "Existing Starlette TestClient/httpx deprecation warning; no dependency changes",
+  "regressions_reproduced_before_fix": [
+    "Huge positive/negative JSON integers caused OverflowError",
+    "Huge pagination offset caused OverflowError",
+    "Existing SQLite import failed to detect changed source values or view formulas",
+    "Existing SQLite import returned numeric/list metadata as strings"
+  ],
+  "data": {
+    "rows_verified": 20640,
+    "cadata_to_sklearn_maximum_difference": 0.0,
+    "sqlite_source_rows_and_view_verified": true,
+    "split_membership_verified": true,
+    "existing_database_verification_is_read_only": true,
+    "model_and_hyperparameters_changed": false,
+    "test_set_re_evaluated": false
+  },
+  "font": {
+    "family": "Be Vietnam Pro",
+    "self_hosted_weights": [400, 600, 700],
+    "license": "SIL OFL 1.1 bundled",
+    "vietnamese_precomposed_and_combining_sample_glyphs_present": true,
+    "browser_font_requests": "All three TTF files returned HTTP 200"
+  },
+  "browser": {
+    "engine": "Chrome",
+    "viewports_checked": ["1920 desktop", "900 intermediate", "390 x 844 mobile emulation"],
+    "all_five_pages_mobile_horizontal_overflow": false,
+    "valid_prediction": 2.019,
+    "prediction_note": "Rounded UI value for the form default inputs",
+    "pagination": "21-40 then network failure preserved page; retry recovered 41-60 of 14448",
+    "network_failure_test": "Stopped the local server, used next-page control, restarted server, used Retry",
+    "mobile_navigation": "Passed",
+    "physical_mobile_device_tested": false,
+    "screenshots": "Local ignored reports/qa/ui/font-*.png"
+  },
+  "design_scan": "Typography updated in DESIGN.md. Remaining advisory findings concern retained palette/grid/radii; static detector cannot resolve Jinja stylesheet URLs. Browser rendering inspected directly.",
+  "remaining_scope_notes": [
+    "Report and slides remain with the user",
+    "Team contribution history must be genuine",
+    "Original test exposure and dataset redistribution caveats remain documented; no claim of a new independent test"
+  ]
+}

@@ -86,3 +86,47 @@ def test_database_import_idempotent_and_detects_split_changes(tmp_path):
         )
     with pytest.raises(ValueError, match="Split"):
         build_database(source, copy)
+
+
+@pytest.mark.skipif(not DB_PATH.exists(), reason="Requires local database")
+@pytest.mark.parametrize(
+    "change",
+    [
+        "UPDATE block_groups SET median_income=median_income+1 WHERE row_id=0",
+        "DROP VIEW housing_features; CREATE VIEW housing_features AS SELECT b.row_id, median_income AS MedInc, housing_age AS HouseAge, total_rooms / households AS AveRooms, total_bedrooms / households AS AveBedrms, population AS Population, population / households AS AveOccup, latitude AS Latitude, longitude AS Longitude, median_value_usd AS MedHouseVal, s.split FROM block_groups b JOIN split_membership s USING(row_id)",
+    ],
+)
+def test_database_detects_value_or_formula_change(tmp_path, change):
+    import shutil
+    from src.database import build_database
+
+    source = ROOT / "houses/cadata.txt"
+    if not source.exists():
+        pytest.skip("Requires local cadata")
+    copy = tmp_path / "copy.sqlite3"
+    shutil.copy2(DB_PATH, copy)
+    with sqlite3.connect(copy) as conn:
+        conn.executescript(change)
+    with pytest.raises(ValueError, match="CSDL"):
+        build_database(source, copy)
+
+
+@pytest.mark.skipif(not DB_PATH.exists(), reason="Requires local database")
+def test_existing_database_manifest_types():
+    from src.database import build_database
+
+    if not (ROOT / "houses/cadata.txt").exists():
+        pytest.skip("Requires local cadata")
+    manifest = build_database()
+    assert manifest["rows"] == 20640
+    assert manifest["raw_columns"] == [
+        "median_value_usd",
+        "median_income",
+        "housing_age",
+        "total_rooms",
+        "total_bedrooms",
+        "population",
+        "households",
+        "latitude",
+        "longitude",
+    ]

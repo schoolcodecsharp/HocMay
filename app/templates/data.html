@@ -7,6 +7,7 @@
 <p><code>block_groups</code> giữ các số tổng. View <code>housing_features</code> chia số phòng, phòng ngủ và dân số cho số hộ; target chia cho 100.000.</p>
 <div class="data-actions"><button class="button primary" id="previous" disabled>Trang trước</button><span id="page-status" role="status">Đang đọc CSDL…</span><button class="button primary" id="next" disabled>Trang sau</button></div>
 <p id="data-error" role="alert" hidden></p>
+<button class="button primary" id="data-retry" type="button" hidden>Thử lại</button>
 <div class="table-wrap"><table id="data-table"><thead><tr>{% for n in ['row_id','MedInc','HouseAge','AveRooms','AveBedrms','Population','AveOccup','Latitude','Longitude','MedHouseVal'] %}<th scope="col">{{ n }}</th>{% endfor %}</tr></thead><tbody></tbody></table></div>
 <p>row_id là chỉ số dòng để truy nguyên, không dùng làm feature. MedHouseVal có đơn vị 100.000 USD lịch sử. Dữ liệu mô tả khu vực năm 1990, không phải giá của một căn nhà hiện tại.</p>
 </section>

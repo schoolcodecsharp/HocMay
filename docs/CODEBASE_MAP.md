@@ -1,6 +1,6 @@
 # Codebase Map
 
-Cập nhật: 2026-09-29.
+Cập nhật: 2026-09-30.
 
 ## Stack
 
@@ -21,9 +21,10 @@ Python, pandas, NumPy, scikit-learn, Matplotlib, FastAPI, Jinja2 và JavaScript 
 - API schema/domain validation: `app/schemas.py`.
 - Templates: `app/templates/`.
 - Design system và responsive layout: `app/static/css/styles.css`.
+- Font tiếng Việt tự host và OFL: `app/static/fonts/` (400/600/700).
 - Form/API interaction: `app/static/js/estimate.js`.
 - CSDL phân trang: `app/static/js/data.js`, `/data`, `/api/data`.
-- Tests: `tests/test_api.py`, `tests/test_pipeline.py`, `tests/test_data.py`.
+- Tests: `tests/test_api.py`, `tests/test_pipeline.py`, `tests/test_data.py`, `tests/test_data_ui.cjs`.
 - Hướng dẫn chạy và tái lập: `README.md`, `docs/REPRODUCIBILITY.md`, `run.ps1`. Báo cáo/slide ngoài phạm vi theo yêu cầu mới.
 
 ## Shared artifacts
@@ -41,6 +42,8 @@ Python, pandas, NumPy, scikit-learn, Matplotlib, FastAPI, Jinja2 và JavaScript 
 - Scaler luôn nằm trong Pipeline.
 - Candidate và serving đều train-only. Artifact refit cũ giữ trong archive, migration có audit, không tuning lại hoặc coi hậu kiểm là test độc lập mới.
 - API không fit hoặc train.
+- JSON quá lớn/offset không hợp lệ trả 422; import CSDL cũ so khớp cả dữ liệu gốc và công thức view, không ghi đè khi sai lệch.
+- Phân trang chỉ chuyển offset sau khi tải thành công; lỗi giữ trang cũ và cho thử lại, timeout 15 giây.
 - Dashboard đọc artifact thật, không hard-code metric.
 - Prediction luôn kèm cảnh báo lịch sử/census block group.
 
@@ -53,6 +56,7 @@ Python, pandas, NumPy, scikit-learn, Matplotlib, FastAPI, Jinja2 và JavaScript 
 .\.venv\Scripts\python.exe -m src.evaluate
 .\.venv\Scripts\python.exe -m src.eda
 .\.venv\Scripts\python.exe -m pytest -q
+node --test tests/test_data_ui.cjs
 .\.venv\Scripts\python.exe -m uvicorn app.main:app
 ```
 
@@ -60,4 +64,4 @@ Python, pandas, NumPy, scikit-learn, Matplotlib, FastAPI, Jinja2 và JavaScript 
 
 Không lập bản đồ `.venv/`, `.cache/`, `__pycache__/` và file CSV được tái tạo.
 
-Receipt kiểm chứng: `reports/results/verification.json` (41 test đạt, clean venv và browser). `.build/` và `reports/qa/` là file tạm riêng, không commit.
+Receipt kiểm chứng ban đầu: `reports/results/verification.json`; đợt sửa font/logic: `reports/results/ui_data_verification.json`. `.build/` và `reports/qa/` là file tạm riêng, không commit.

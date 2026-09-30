@@ -179,3 +179,21 @@ def test_missing_database_returns_503(client, tmp_path, monkeypatch):
     monkeypatch.setattr(main, "DB_PATH", tmp_path / "missing.sqlite3")
     assert client.get("/api/data").status_code == 503
     assert not (tmp_path / "missing.sqlite3").exists()
+
+
+@pytest.mark.parametrize("value", [10**400, -(10**400)])
+def test_huge_json_integer_rejected(client, valid_payload, value):
+    valid_payload["MedInc"] = value
+    assert client.post("/api/estimate", json=valid_payload).status_code == 422
+
+
+def test_huge_pagination_offset_rejected(client):
+    assert client.get(f"/api/data?offset={10**400}").status_code == 422
+
+
+def test_page_after_last_is_empty(client):
+    response = client.get("/api/data?offset=20640")
+    if response.status_code == 503:
+        pytest.skip("Database not imported locally")
+    assert response.status_code == 200
+    assert response.json()["rows"] == []

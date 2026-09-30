@@ -18,11 +18,16 @@ class EstimateRequest(BaseModel):
     @field_validator("*", mode="before")
     @classmethod
     def finite_number(cls, value):
-        if (
-            isinstance(value, bool)
-            or not isinstance(value, (int, float))
-            or not math.isfinite(value)
-        ):
+        # JSON có thể chứa số nguyên lớn hơn miền float của Python.
+        try:
+            valid = (
+                not isinstance(value, bool)
+                and isinstance(value, (int, float))
+                and math.isfinite(value)
+            )
+        except OverflowError:
+            valid = False
+        if not valid:
             raise ValueError(
                 "Phải là số JSON hữu hạn; không nhận chuỗi, boolean, NaN hoặc vô hạn."
             )

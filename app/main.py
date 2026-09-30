@@ -146,7 +146,9 @@ def data_page(request: Request):
 
 
 @app.get("/api/data")
-def data_preview(offset: int = Query(0, ge=0), limit: int = Query(20, ge=1, le=100)):
+def data_preview(
+    offset: int = Query(0, ge=0, le=20640), limit: int = Query(20, ge=1, le=100)
+):
     try:
         with sqlite3.connect(f"{DB_PATH.as_uri()}?mode=ro", uri=True) as conn:
             conn.row_factory = sqlite3.Row

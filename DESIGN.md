@@ -15,21 +15,35 @@ colors:
   error-red: "#9d3027"
 typography:
   display:
-    fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "clamp(2.8rem, 6vw, 5.8rem)"
-    fontWeight: 500
-    lineHeight: 1.12
+    fontFamily: "Be Vietnam Pro, Segoe UI, Arial, sans-serif"
+    fontSize: "clamp(2.5rem, 5vw, 4.5rem)"
+    fontWeight: 600
+    lineHeight: 1.18
     letterSpacing: "-0.025em"
   body:
-    fontFamily: "Segoe UI Variable, Segoe UI, Arial, sans-serif"
+    fontFamily: "Be Vietnam Pro, Segoe UI, Arial, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.6
+    lineHeight: 1.65
   label:
-    fontFamily: "Segoe UI Variable, Segoe UI, Arial, sans-serif"
-    fontSize: "0.78rem"
-    fontWeight: 800
-    letterSpacing: "0.14em"
+    fontFamily: "Be Vietnam Pro, Segoe UI, Arial, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 600
+    lineHeight: 1.65
+  section:
+    fontSize: "clamp(1.5rem, 3vw, 2.25rem)"
+    fontWeight: 600
+    lineHeight: 1.25
+  page:
+    fontSize: "clamp(2.25rem, 4.5vw, 4rem)"
+  lead:
+    fontSize: "1.125rem"
+  functional-heading:
+    fontSize: "1.25rem"
+  value:
+    fontSize: "1.5rem"
+  metric:
+    fontSize: "3rem"
 rounded:
   control: "10px"
   surface: "14px"
@@ -63,7 +77,7 @@ The interface feels like a contemporary field record used to inspect census geog
 **Key Characteristics:**
 
 - Warm paper surfaces with deep blue-green ink.
-- Editorial serif questions paired with familiar sans-serif controls.
+- Vietnamese-capable, locally hosted typography with clear weight and scale contrasts.
 - Coordinate grids appear only where measurement or geography is meaningful.
 - Terracotta marks actions, warnings and observed points.
 
@@ -75,12 +89,11 @@ Deep survey ink supplies structure, field paper keeps long reading comfortable, 
 
 ## Typography
 
-**Display Font:** Georgia with Times New Roman fallback  
-**Body Font:** Segoe UI Variable with Segoe UI and Arial fallbacks
+**Display and Body Font:** Be Vietnam Pro, self-hosted; Segoe UI and Arial fallbacks.
 
-Large serif headings frame research questions. Sans-serif text handles controls, labels, warnings and dense model evidence. Body copy stays near 65–75 characters where practical.
+The user's font revision (2026-09-30) replaces the serif/system mix with one consistent Vietnamese family while retaining the survey palette and layout. Research headings use 600, controls 600, emphasis 700, body 400. Body is 16px/1.65; supporting copy is at least 14px. Compact headings use 1.25 leading for stacked Vietnamese accents. Narrative copy stays near 65–72 characters; evidence tables remain wide. Inputs, metrics and tables use tabular numerals.
 
-**The Evidence Label Rule.** Uppercase tracked labels are reserved for datelines, metric names and short research metadata.
+**The Evidence Label Rule.** Multiword Vietnamese labels retain normal casing and spacing; weight establishes hierarchy. Three original TTF files (about 410KB total) and their OFL license ship in `app/static/fonts`, with `font-display: swap` and only Regular preloaded. No external font service is needed at runtime.
 
 ## Layout
 
