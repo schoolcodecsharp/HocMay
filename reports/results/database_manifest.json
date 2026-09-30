@@ -1,0 +1,21 @@
+{
+  "source_file": "cadata.txt",
+  "source_sha256": "5e407d03adc03eb6aa34360c2976ee534d8309287dd49e3c22688630bddc9271",
+  "imported_at_utc": "2026-09-29T13:39:59.695771+00:00",
+  "rows": 20640,
+  "raw_columns": [
+    "median_value_usd",
+    "median_income",
+    "housing_age",
+    "total_rooms",
+    "total_bedrooms",
+    "population",
+    "households",
+    "latitude",
+    "longitude"
+  ],
+  "verified_against": "fetch_california_housing(as_frame=True)",
+  "max_absolute_difference": 0.0,
+  "removed_rows": 0,
+  "schema_version": 1
+}
