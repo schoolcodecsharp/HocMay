@@ -1,0 +1,47 @@
+{
+  "validation": {
+    "mean_baseline": {
+      "mae": 0.9006276974080262,
+      "rmse": 1.1413892293770778,
+      "r2": -1.2295878142332128e-06
+    },
+    "linear_regression": {
+      "mae": 0.5334518974729614,
+      "rmse": 0.7354420909285341,
+      "r2": 0.5848261822866255
+    },
+    "sgd_regressor": {
+      "mae": 0.5342274319617476,
+      "rmse": 0.7354786200759387,
+      "r2": 0.5847849381902748
+    }
+  },
+  "test": {
+    "mean_baseline": {
+      "mae": 0.911773800940502,
+      "rmse": 1.1499222416350239,
+      "r2": -8.122590623216297e-06
+    },
+    "linear_regression": {
+      "mae": 0.521043010188229,
+      "rmse": 0.7212908538474728,
+      "r2": 0.6065519204153753
+    },
+    "sgd_regressor": {
+      "mae": 0.5218013720479426,
+      "rmse": 0.7198345238050883,
+      "r2": 0.6081391076209188
+    },
+    "selected_pipeline": {
+      "mae": 0.5216883918038634,
+      "rmse": 0.7217682498014544,
+      "r2": 0.606030930361616
+    }
+  },
+  "selection": {
+    "selection_metric": "validation RMSE",
+    "selected_model": "linear_regression",
+    "selected_sgd_learning_rate": 0.0001,
+    "test_was_not_used_for_selection": true
+  }
+}
