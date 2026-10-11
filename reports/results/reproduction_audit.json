@@ -1,0 +1,27 @@
+{
+  "kind": "post-hoc reproduction of already published test; not fresh independent evaluation",
+  "matches_original": true,
+  "model_sha256": "cf8f035aa07d3f32b7813b617ac8531f20b4c5b4870546cc01a3b0ea73eee8d6",
+  "metrics": {
+    "mean_baseline": {
+      "mae": 0.911773800940502,
+      "rmse": 1.1499222416350239,
+      "r2": -8.122590623216297e-06
+    },
+    "linear_regression": {
+      "mae": 0.521043010188229,
+      "rmse": 0.7212908538474728,
+      "r2": 0.6065519204153753
+    },
+    "sgd_regressor": {
+      "mae": 0.5218013720479426,
+      "rmse": 0.7198345238050883,
+      "r2": 0.6081391076209188
+    },
+    "selected_pipeline": {
+      "mae": 0.521043010188229,
+      "rmse": 0.7212908538474728,
+      "r2": 0.6065519204153753
+    }
+  }
+}

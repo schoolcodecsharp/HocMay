@@ -1,0 +1,35 @@
+{
+  "verified_on": "2026-09-29",
+  "environment": "Windows x64, CPython 3.14.7",
+  "dependency_install": "Fresh venv, requirements-lock.txt installed successfully",
+  "pip_check": "No broken requirements found",
+  "automated_tests": {"passed": 41, "failed": 0, "skipped": 0},
+  "test_warning": "Starlette TestClient emits an httpx deprecation warning; tests pass",
+  "clean_copy": {
+    "candidate_artifact_initially_absent": true,
+    "candidate_retrained_from_train_validation": true,
+    "validation_matches_original": true,
+    "serving_scaler_samples": 14448,
+    "database_import_into_new_file": true,
+    "rows": 20640,
+    "maximum_absolute_source_difference": 0.0,
+    "dataset_cache_reused": true,
+    "tests_passed": 41
+  },
+  "notebook": "All code cells executed against project environment; headless plotting warnings expected",
+  "browser": {
+    "engine": "Chrome",
+    "desktop_viewport": "1920 px wide",
+    "mobile_emulation": "390 x 844",
+    "valid_prediction": true,
+    "old_result_hidden_after_input_edit": true,
+    "empty_field_error": true,
+    "mobile_menu": true,
+    "pagination_verified": "Train 1-20 to 21-40 of 14448",
+    "dashboard_images_loaded": 11,
+    "document_horizontal_overflow": false,
+    "physical_mobile_device_tested": false
+  },
+  "evaluation_integrity": "Historical test results reused. Post-hoc reproduction is not a fresh independent evaluation. No model or hyperparameter selection based on test.",
+  "out_of_scope": ["Report and slides: user will prepare separately", "Production Internet deployment"]
+}
